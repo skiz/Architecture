@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestArchitecture < Test::Unit::TestCase
+class TestAdaptable < Test::Unit::TestCase
   include Adaptable
   
   def test_should_be_able_to_access_parser
