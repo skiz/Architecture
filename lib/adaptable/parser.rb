@@ -1,4 +1,8 @@
 module Adaptable
+  
+  autoload :XmlParser,  'adaptable/parsers/xml_parser'
+  autoload :TextParser, 'adaptable/parsers/text_parser'
+  
   class Parser
     
     class UndefinedParserError < StandardError ; end
@@ -9,16 +13,11 @@ module Adaptable
     end
     
     def self.for(fixture)
-      Dir[File.dirname(__FILE__) + '/parsers/*.rb'].each {|file| require file }
-      klass = Adaptable.const_get(fixture.name.capitalize + 'Parser')
-      klass.new(fixture)
-    rescue NameError, TypeError => e
+      klass_name = fixture.name.capitalize + 'Parser'
+      Adaptable.const_get(klass_name).new(fixture)
+    rescue LoadError, NameError => e
       raise UndefinedParserError.new('Invalid Parser: ' + e)
     end
-    
-    def to_s
-      'Undefined Parser'
-    end
-    
+
   end
 end

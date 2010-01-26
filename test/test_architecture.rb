@@ -35,4 +35,11 @@ class TestArchitecture < Test::Unit::TestCase
     assert_equal '<xml />', Parser.for(fixture).to_s
   end
   
+  def test_should_skip_broken_files
+    assert_raise(Parser::UndefinedParserError) do
+      fixture = Fixture.new('broken')
+      Parser.for(fixture)
+    end
+  end
+  
 end
