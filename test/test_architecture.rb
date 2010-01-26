@@ -42,4 +42,11 @@ class TestArchitecture < Test::Unit::TestCase
     end
   end
   
+  def test_should_skip_invalid_parsers
+    assert_raise(Parser::UndefinedParserError) do
+      fixture = 'fail'
+      Parser.for(fixture)
+    end
+  end
+  
 end
